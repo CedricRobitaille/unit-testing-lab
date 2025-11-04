@@ -65,6 +65,34 @@ describe("GET /users", () => {
   });
 });
 
+describe("POST /users", () => {
+  it("adds a new user to the list", (done) => {
+    // Add a new mock user
+    const newUser = {
+      name: 'John Smith',
+      email: 'john@example.com',
+      password: 'john123',
+      phoneNumber: '9876543210'
+    };
+    // Make a POST request to the server
+    request(app)
+      .post("/user")
+      // Send the new user data to the server
+      .send(newUser)
+      // Test to ensure that the response is a JSON object
+      .expect('Content-Type', /json/)
+      // Test to ensure that the status code is 200
+      .expect(200)
+      // Test the response from the server
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.user).to.be.an('object');
+        expect(res.body.user).to.have.property('name', newUser.name);
+        expect(res.body.user).to.have.property('email', newUser.email);
+        done();
+      })
+  })
+})
 
 after((done) => {
   // Disconenct from the DB
