@@ -1,14 +1,21 @@
 const add = (param1, param2) => {
+  const param1Type = typeof param1;
+  const param2Type = typeof param2
+  
   // Check if both parameters are numbers
-  if (typeof param1 === "number" && typeof param2 === "number") {
+  if (param1Type === "number" && param2Type === "number") {
     // Both are numbers, so add them
     return param1 + param2;
   }
 
   //Check is both parameters are strings
-  if (typeof param1 === "string" && typeof param2 === "string") {
+  if (param1Type === "string" && param2Type === "string") {
     // Both are strings, so concatenate them
     return param1 + param2;
+  }
+
+  if ((param1Type === "string" && param2Type === "number") || (param1Type === "number" && param2Type === "string")) {
+    return parseInt(param1) + parseInt(param2);
   }
 
   // If neither condition is met, return a default value or an error message
@@ -27,5 +34,12 @@ const unitTestExampleTwo = () => {
   console.log(add("Hello ", "world") === "Hello world" ? "Passed" : "Failed");
 };
 
+const unitTestExampleThree = () => {
+  // Test adding two non-numeric strings
+  console.log('Test 3: Adding two mismatched values ("1" and 1)');
+  console.log(add("1", 1) === 2 ? "Passed" : "Failed");
+};
+
 unitTestExampleOne();
 unitTestExampleTwo();
+unitTestExampleThree();
